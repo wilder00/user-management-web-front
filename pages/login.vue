@@ -1,0 +1,86 @@
+<template>
+<div id="loginView" class="container text-center">
+
+    <form class="form-signin" @submit.prevent="onLogIn">
+      <img class="mb-4" :src="require('assets/images/general/wilduser.svg')" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Wild User</h1>
+
+
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input v-model="credentialForm.email" type="email" id="inputEmail" class="form-control" placeholder="Correo" required="true" autofocus="">
+      <div class="mt-2"></div>
+      
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input v-model="credentialForm.password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="true">
+      <div class="mt-5"></div>
+      
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+      <p class="mt-5 mb-3 text-muted">¿Sin cuenta? <NuxtLink to="/register">Regístrate</NuxtLink> </p>
+    </form>
+  
+
+</div>
+</template>
+
+<script>
+export default {
+  layout: "guests",
+
+  data(){
+    return {
+      isLoginLoading: false,
+      credentialForm: {
+        email:'',
+        password:''
+      }
+    }
+  },
+
+  methods: {
+    async onLogIn(){
+      if(this.isLoginLoading){
+        return;
+      }
+
+      try {
+        this.isLoginLoading = true;
+        const response = await this.$auth.loginWith('local', { data: this.credentialForm })
+
+        console.log("login response: ", response);
+
+        // setTimeout(() => { window.location.href = '/zona' }, 800)
+      } catch (err) {
+        let message = ""
+        message = 'Datos inválidos.'
+        if(err.request){
+          if(err.message === 'Network Error'){
+            message = `Error al intentar conectarse`
+          }
+        }
+        if(err.response){
+          if(err.response.message)
+          message = `${err.response.message}`
+        }
+        console.log(message);
+        this.isLoginLoading = false
+      }finally{
+        this.isLoginLoading = false;
+      }
+    }
+  }
+
+
+
+
+}
+</script>
+
+<style lang="scss" scoped>
+#loginView{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+</style>
