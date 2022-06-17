@@ -2,14 +2,20 @@
   <nav id="sidenav" class=" ">
     <div class="sidenav-content pt-4 pl-2">
       <div class="list-group">
-        <NuxtLink v-for="element in sidenavElements" :key="element.name" :to="element.href" class="list-group-item list-group-item-action">
+        <NuxtLink
+          v-for="element in sidenavElements"
+          :key="element.name" 
+          :to="element.href" 
+          class="list-group-item list-group-item-action"
+        >
           {{ element.name }}
         </NuxtLink >
       </div>
       <div class="list-group mt-2">
-        <NuxtLink to="/logout" class="list-group-item list-group-item-action text-danger">
+        <b-list-group-item class="list-group-item list-group-item-action text-danger"   @click="onLogOut"  button>Cerrar Sesión</b-list-group-item>
+        <!-- <NuxtLink to="#" @click="onLogOut" class="list-group-item list-group-item-action text-danger">
           Cerrar Sesión
-        </NuxtLink >
+        </NuxtLink > -->
       </div>
 
       <!-- <b-list-group>
@@ -27,11 +33,22 @@ export default {
   data () {
     return {
       sidenavElements: [
-        {name: 'Users', href:'/users'},
-        {name: 'Employees', href:'/'},
-        {name: 'carter', href:'/'}
+        {name: 'Usuarios', href:'/'},
+        {name: 'Solicitudes', href:'/registerRequests'},
+        {name: 'carter', href:'/a'}
       ]
     }
+  },
+
+  methods: {
+    onLogOut(){
+      this.$auth.logout();
+      this.$router.push('/login')
+    },
+    /* isActive(path){
+      const fullPath = this.$route.fullPath;
+      return path === fullPath;
+    } */
   }
 }
 </script>

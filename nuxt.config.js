@@ -81,7 +81,8 @@ export default {
         },
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
-          logout: { url: '/auth/logout', method: 'post' },
+          // logout: { url: '/auth/logout', method: 'post' },
+          logout: false,
           user: { url: '/auth/user', method: 'get' }
         }
       }
@@ -90,7 +91,10 @@ export default {
 
   router: {
     base: '/',
-    middleware: ['auth']
+    middleware: ['auth'],
+    //linkActiveClass: 'active',
+    linkExactActiveClass: 'active',
+
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

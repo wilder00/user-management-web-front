@@ -6,12 +6,12 @@
       <h1 class="h3 mb-3 font-weight-normal">Wild User</h1>
 
 
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input v-model="credentialForm.email" type="email" id="inputEmail" class="form-control" placeholder="Correo" required="true" autofocus="">
+      <label for="email" class="sr-only">Email address</label>
+      <input id="email" v-model="credentialForm.email" type="email"  class="form-control" placeholder="Correo" required="true" autofocus="">
       <div class="mt-2"></div>
       
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input v-model="credentialForm.password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="true">
+      <label for="password" class="sr-only">Password</label>
+      <input id="password" v-model="credentialForm.password" type="password"  class="form-control" placeholder="Contraseña" required="true">
       <div class="mt-5"></div>
       
       <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
@@ -24,8 +24,8 @@
 
 <script>
 export default {
+  auth: 'guest',
   layout: "guests",
-
   data(){
     return {
       isLoginLoading: false,
@@ -45,10 +45,13 @@ export default {
       try {
         this.isLoginLoading = true;
         const response = await this.$auth.loginWith('local', { data: this.credentialForm })
-
-        console.log("login response: ", response);
-
-        // setTimeout(() => { window.location.href = '/zona' }, 800)
+        if(response.statusText === 'OK'){
+          this.makeToast(
+            `Redirigiendo al portal`,
+            'success',
+            'Inicio de Sesión exitoso'
+          )
+        }
       } catch (err) {
         let message = ""
         message = 'Datos inválidos.'
@@ -58,14 +61,35 @@ export default {
           }
         }
         if(err.response){
-          if(err.response.message)
-          message = `${err.response.message}`
+          message = err.response.data.message;
+          console.log(message);
+          console.log(typeof(message) === 'string' ? message : message[0]);
+          const text = typeof(message) === 'string' ? message : message[0]
+          message = text;
         }
-        console.log(message);
+
+        this.makeToast(
+          ` ${ message }`,
+          'danger',
+          'Inicio de sesión fallido.'
+        )
         this.isLoginLoading = false
       }finally{
         this.isLoginLoading = false;
       }
+    },
+
+    makeToast(message, variant, title = "", solid = false) {
+      this.toastCount++
+      this.$bvToast.toast(message, {
+        title,
+        toaster: 'b-toaster-bottom-left',
+        autoHideDelay: 5000,
+        noAutoHide: true,
+        appendToast: true,
+        variant,
+        solid,
+      })
     }
   }
 

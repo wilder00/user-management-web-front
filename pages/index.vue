@@ -31,9 +31,21 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import UserTable from '~/components/tables/UserTable.vue';
-
 export default {
   components: { UserTable },
+  computed: {
+    ...mapState('users',['isUsersLoading', 'users']),
+    ...mapState('roles',['isRolesLoading', 'roles']),
+  },
+  methods: {
+    ...mapActions('users', ['fetchUsers']),
+    ...mapActions('roles', ['fetchRoles']),
+  },
+  created(){
+    this.fetchUsers();
+    this.fetchRoles();
+  }
 }
 </script>
