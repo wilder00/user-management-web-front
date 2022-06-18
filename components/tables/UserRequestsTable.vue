@@ -23,26 +23,7 @@
           <b-button variant="danger">Button</b-button>
       </td>
     </tr>
-    <!-- <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>
-        <b-button variant="success">Button</b-button>
-          <b-button variant="danger">Button</b-button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>
-        <b-button variant="success">Button</b-button>
-          <b-button variant="danger">Button</b-button>
-      </td>
-    </tr> -->
+  
   </tbody>
 </table>
   </div>
@@ -59,6 +40,7 @@ export default {
   computed: {
     ...mapState('users', ['isUsersLoading', 'users']),
     ...mapState('roles', ['isRolesLoading', 'roles']),
+
     rolLabels(){
       return this.roles.reduce((prev,curr) => {
         prev[curr.roleName] = curr.label

@@ -4,21 +4,12 @@
   <div>
     <b-card>
       <b-form inline>
-        <!-- <label class="sr-only" for="inline-form-input-name">Name</label>
-        <b-form-input
-          id="inline-form-input-name"
-          class="mb-2 mr-sm-2 mb-sm-0"
-          placeholder="Buscar usuario"
-        ></b-form-input> -->
 
         <label class="sr-only" for="inline-form-input-username">Username</label>
         <b-input-group prepend="" class="mb-2 mr-sm-2 mb-sm-0">
-          <b-form-input id="inline-form-input-username" placeholder="Buscar usuario"></b-form-input>
+          <b-form-input id="inline-form-input-username" v-model="searchQuery" placeholder="Buscar usuario"></b-form-input>
         </b-input-group>
 
-        <!-- <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0">Remember me</b-form-checkbox> -->
-
-        <!-- <b-button variant="primary">Save</b-button> -->
       </b-form>
     </b-card>
   </div>
@@ -39,6 +30,7 @@ export default {
   components: { DeletedUsersTable, LoadingWindow },
   data () {
     return {
+      searchQuery:'',
       isDeletingUsersLoading: true,
     }
   },
@@ -49,6 +41,18 @@ export default {
   methods: {
     ...mapActions('users', ['fetchDeletedUsers']),
     ...mapActions('roles', ['fetchRoles']),
+  },
+    watch: {
+    searchQuery (text, oldText){
+      if(text === "") this.fetchDeletedUsers();
+      if(text.trim() === ""){
+        return;
+      }
+      const params = {
+        q: text.trim()
+      };
+      this.fetchDeletedUsers({ params });
+    }
   },
   created(){
     this.isDeletingUsersLoading = true;

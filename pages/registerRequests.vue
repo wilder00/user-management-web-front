@@ -8,7 +8,7 @@
 
         <label class="sr-only" for="inline-form-input-username">Username</label>
         <b-input-group prepend="" class="mb-2 mr-sm-2 mb-sm-0">
-          <b-form-input id="inline-form-input-username" placeholder="Buscar usuario"></b-form-input>
+          <b-form-input id="inline-form-input-username" v-model="searchQuery" placeholder="Buscar usuario"></b-form-input>
         </b-input-group>
 
       </b-form>
@@ -42,6 +42,18 @@ export default {
   methods: {
     ...mapActions('users', ['fetchUserRequests']),
     ...mapActions('roles', ['fetchRoles']),
+  },
+  watch:{
+    searchQuery (text, oldText){
+      if(text === "") this.fetchUserRequests();
+      if(text.trim() === ""){
+        return;
+      }
+      const params = {
+        q: text.trim()
+      };
+      this.fetchUserRequests({ params });
+    }
   },
   created(){
     this.isUserRequestLoading=true;

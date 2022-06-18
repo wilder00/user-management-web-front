@@ -27,10 +27,7 @@ export const mutations = {
 export const actions = { 
 
   async fetchUsers({state, commit}, dataConfig) {
-    /* let queries
-    if(dataConfig){
-      queries = dataConfig.queries
-    } */
+
     commit('toggleUserLoading',true)
     try {
       const resp = await this.$axios.get('/users', dataConfig);
@@ -42,10 +39,10 @@ export const actions = {
     }
   },
 
-  async fetchUserRequests({state, commit}) {
+  async fetchUserRequests({state, commit}, dataConfig) {
     commit('toggleUserLoading',true)
     try {
-      const resp = await this.$axios.get('/users/requests');
+      const resp = await this.$axios.get('/users/requests', dataConfig);
       commit('setUsers', { users: resp.data.users});
     } catch (error) {
       console.log(error);

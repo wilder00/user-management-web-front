@@ -54,6 +54,7 @@ export default {
   },
   watch: {
     searchQuery (text, oldText){
+      if(text === "") this.fetchUsers();
       if(text.trim() === ""){
         return;
       }
