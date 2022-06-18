@@ -32,6 +32,30 @@ export const actions = {
     }finally{
       commit('toggleUserLoading',false)
     }
+  },
+
+  async fetchUserRequests({state, commit}) {
+    commit('toggleUserLoading',true)
+    try {
+      const resp = await this.$axios.get('/users/requests');
+      commit('setUsers', { users: resp.data.users});
+    } catch (error) {
+      console.log(error);
+    }finally{
+      commit('toggleUserLoading',false)
+    }
+  },
+
+  async fetchDeletedUsers({state, commit}) {
+    commit('toggleUserLoading',true)
+    try {
+      const resp = await this.$axios.get('/users/deleted');
+      commit('setUsers', { users: resp.data.users});
+    } catch (error) {
+      console.log(error);
+    }finally{
+      commit('toggleUserLoading',false)
+    }
   }
 
 };

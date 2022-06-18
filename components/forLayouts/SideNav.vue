@@ -35,7 +35,7 @@ export default {
       sidenavElements: [
         {name: 'Usuarios', href:'/'},
         {name: 'Solicitudes', href:'/registerRequests'},
-        {name: 'carter', href:'/a'}
+        {name: 'Eliminados', href:'/deletedUsers'}
       ]
     }
   },

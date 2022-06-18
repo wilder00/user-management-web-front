@@ -40,11 +40,11 @@ export default {
     ...mapState('roles',['isRolesLoading', 'roles']),
   },
   methods: {
-    ...mapActions('users', ['fetchUserRequests']),
+    ...mapActions('users', ['fetchDeletedUsers']),
     ...mapActions('roles', ['fetchRoles']),
   },
   created(){
-    this.fetchUserRequests();
+    this.fetchDeletedUsers();
     this.fetchRoles();
   }
 }
