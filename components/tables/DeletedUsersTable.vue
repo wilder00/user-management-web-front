@@ -8,41 +8,26 @@
       <th scope="col">Apellido</th>
       <th scope="col">correo</th>
       <th scope="col">Rol</th>
+      <th scope="col">Description</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr v-for="(user, index) in users" :key="user.id">
+    <tr v-for="(user, index) in deletedUsers" :key="user.id">
       <th scope="row">{{index +1}}</th>
-      <td>{{ user.name }}</td>
-      <td>{{ user.lastName }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ rolLabels[user.role] }}</td>
+      <td>{{ user.deletedUser.name }}</td>
+      <td>{{ user.deletedUser.lastName }}</td>
+      <td>{{ user.deletedUser.email }}</td>
+      <td>{{ rolLabels[user.deletedUser.role] }}</td>
+      <td>
+        {{ `Eliminado por ${user.deletingUser.name} ${user.deletingUser.lastName} como ${rolLabels[user.deletingUser.role]} el ${ new Date() }.` }}
+      </td>
       <td>
         <b-button variant="success">Button</b-button>
           <b-button variant="danger">Button</b-button>
       </td>
     </tr>
-    <!-- <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>
-        <b-button variant="success">Button</b-button>
-          <b-button variant="danger">Button</b-button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>
-        <b-button variant="success">Button</b-button>
-          <b-button variant="danger">Button</b-button>
-      </td>
-    </tr> -->
+
   </tbody>
 </table>
   </div>
@@ -57,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('users', ['isUsersLoading', 'users']),
+    ...mapState('users', ['isUsersLoading', 'deletedUsers']),
     ...mapState('roles', ['isRolesLoading', 'roles']),
     rolLabels(){
       return this.roles.reduce((prev,curr) => {

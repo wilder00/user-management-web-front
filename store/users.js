@@ -2,6 +2,7 @@
   export const state = ()=>({
     isUsersLoading: false,
     users: [],
+    deletedUsers: [],
   });
 
 
@@ -16,16 +17,23 @@ export const mutations = {
   },
   setUsers(state, { users }){
     state.users = users ;
-  }
+  },
+  setDeletedUsers(state, { deletedUsers }){
+    state.deletedUsers = deletedUsers ;
+  },
 };
 
   // como los methods, puede ser asincrono. se pasa de parámetro ```{ commit }``` para usar los mutations
 export const actions = { 
 
-  async fetchUsers({state, commit}) {
+  async fetchUsers({state, commit}, dataConfig) {
+    /* let queries
+    if(dataConfig){
+      queries = dataConfig.queries
+    } */
     commit('toggleUserLoading',true)
     try {
-      const resp = await this.$axios.get('/users');
+      const resp = await this.$axios.get('/users', dataConfig);
       commit('setUsers', { users: resp.data.users});
     } catch (error) {
       console.log(error);
@@ -46,11 +54,12 @@ export const actions = {
     }
   },
 
-  async fetchDeletedUsers({state, commit}) {
+  async fetchDeletedUsers({state, commit}, dataConfig) {
     commit('toggleUserLoading',true)
     try {
-      const resp = await this.$axios.get('/users/deleted');
-      commit('setUsers', { users: resp.data.users});
+      const resp = await this.$axios.get('/users/deleted', dataConfig);
+      commit('setDeletedUsers', { deletedUsers: resp.data.users});
+
     } catch (error) {
       console.log(error);
     }finally{

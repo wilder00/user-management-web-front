@@ -1,6 +1,6 @@
 <template>
-<div class="container">
-
+<LoadingWindow v-if="isDeletingUsersLoading" />
+<div v-else class="container">
   <div>
     <b-card>
       <b-form inline>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="">
-    <UserRequestsTable />
+    <DeletedUsersTable />
   </div>
 
 </div>
@@ -32,9 +32,16 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import UserRequestsTable from '~/components/tables/UserRequestsTable.vue';
+import DeletedUsersTable from '~/components/tables/DeletedUsersTable.vue';
+import LoadingWindow from '~/components/pseudoViews/LoadingWindow.vue';
+
 export default {
-  components: { UserRequestsTable },
+  components: { DeletedUsersTable, LoadingWindow },
+  data () {
+    return {
+      isDeletingUsersLoading: true,
+    }
+  },
   computed: {
     ...mapState('users',['isUsersLoading', 'users']),
     ...mapState('roles',['isRolesLoading', 'roles']),
@@ -44,7 +51,8 @@ export default {
     ...mapActions('roles', ['fetchRoles']),
   },
   created(){
-    this.fetchDeletedUsers();
+    this.isDeletingUsersLoading = true;
+    this.fetchDeletedUsers().then(()=>{ this.isDeletingUsersLoading = false } );
     this.fetchRoles();
   }
 }

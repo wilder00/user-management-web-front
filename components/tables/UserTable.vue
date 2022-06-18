@@ -19,8 +19,8 @@
       <td>{{ user.email }}</td>
       <td>{{ rolLabels[user.role] }}</td>
       <td>
-        <b-button variant="success">Button</b-button>
-          <b-button variant="danger">Button</b-button>
+        <b-button variant="info">Ver</b-button>
+          <b-button variant="danger">Eliminar</b-button>
       </td>
     </tr>
     <!-- <tr>
