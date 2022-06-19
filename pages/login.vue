@@ -51,7 +51,7 @@ export default {
       try {
         this.isLoginLoading = true;
         const response = await this.$auth.loginWith('local', { data: this.credentialForm })
-        if(response.statusText === 'OK'){
+        if( response.status >= 200  && response.status <= 299 ){
           this.makeToast(
             `Redirigiendo al portal`,
             'success',

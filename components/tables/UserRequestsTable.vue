@@ -64,7 +64,7 @@ export default {
         user.isBeingAccepted = true;
         this.$forceUpdate();
         const response = await this.$axios.post(`users/requests/${user.id}`)
-        if(response.statusText === 'OK'){
+        if( response.status >= 200  && response.status <= 299 ){
           this.fetchUserRequests();
           this.makeToast(response.data.message, 'info', 'Usuario Aceptado')
         }else{
@@ -84,6 +84,8 @@ export default {
           this.makeToast("Ocurrió un problema en la aceptación", 'danger', 'Aceptación fallida')
         }
           this.$forceUpdate();
+      }finally{
+        user.isBeingAccepted = false;
       }
     },
 

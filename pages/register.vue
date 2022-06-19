@@ -57,17 +57,17 @@ export default {
       if(this.isLoading === true) return;
       this.isLoading = true
       try {
-        const resp = await this.$axios.post('/auth/register', this.registerForm)
-        if(resp.status === 201){ // statusText es 'Created' y no 'OK'
+        const response = await this.$axios.post('/auth/register', this.registerForm)
+        if( response.status >= 200  && response.status <= 299 ){ // statusText es 'Created' y no 'OK', en el deploy llega vacío
           this.resetForm();
-          const user = resp.data
+          const user = response.data
           this.makeToast(
             `${user.name}, debes esperar a que un administrador acepte tu registro.`,
             'success',
             'Registro exitoso'
           )
         }else{
-          const message = resp.data.message;
+          const message = response.data.message;
           const text = typeof(message) === 'string'? message : message[0]
           this.makeToast(
             ` ${text}. El estatus no es satisfactorio.`,

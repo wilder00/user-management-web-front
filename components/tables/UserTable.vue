@@ -63,7 +63,7 @@ export default {
         user.isBeingDeleting = true;
         this.$forceUpdate();
         const response = await this.$axios.delete(`users/${user.id}`)
-        if(response.statusText === 'OK'){
+        if( response.status >= 200  && response.status <= 299 ){
           this.fetchUsers();
           this.makeToast(response.data.message, 'info', 'Eliminado exitoso')
         }

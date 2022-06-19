@@ -74,7 +74,7 @@ export default {
         user.isBeingRestored = true;
         this.$forceUpdate();
         const response = await this.$axios.post(`users/deleted/${user.id}`)
-        if(response.statusText === 'OK'){
+        if( response.status >= 200  && response.status <= 299 ){
           this.fetchDeletedUsers();
           this.makeToast(response.data.message, 'success', 'Restauración exitoso')
         }
