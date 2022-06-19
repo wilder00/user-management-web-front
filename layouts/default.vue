@@ -45,6 +45,7 @@ export default {
     grid-row-start: 2;
     grid-row-end: 7;
 
+    overflow-y: auto !important;
     padding: 2rem 0;
   }
 }
