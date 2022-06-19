@@ -11,7 +11,20 @@
             WildUsers
           </span>
         </b-navbar-brand>
+
+        <div class="ml-auto">
+          <span class="text-white">{{ fullName }}</span>
+        </div>
       </b-navbar>
     </div>
   </nav>
 </template>
+<script>
+export default {
+  computed: {
+    fullName(){
+      return ` ${ this.$auth.user.name } ${ this.$auth.user.lastName }`
+    }
+  }
+}
+</script>
