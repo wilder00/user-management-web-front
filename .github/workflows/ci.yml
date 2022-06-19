@@ -9,7 +9,8 @@ on:
     branches:
       - main
       - master
-
+env:
+  NUXT_APP_AXIOS_API: ${{ secrets.NUXT_APP_AXIOS_API }}
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
