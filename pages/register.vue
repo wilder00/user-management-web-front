@@ -68,8 +68,9 @@ export default {
           )
         }else{
           const message = resp.data.message;
+          const text = typeof(message) === 'string'? message : message[0]
           this.makeToast(
-            ` ${message[0]}. En caso de persistir el error, comunicarse con un administrador`,
+            ` ${text}. El estatus no es satisfactorio.`,
             'danger',
             'Registro fallido'
           )
@@ -77,13 +78,11 @@ export default {
 
       } catch (error) {
         if (error.response){
-          let message="";
-          message = error.response.data.message;
-          this.makeToast(
-            ` ${ message[0] }`,
-            'danger',
-            'Registro fallido'
-          )
+          const message = error.response.data.message;
+          if(message){
+            const text = typeof(message) === 'string'? message : message[0]
+            this.makeToast(text, 'danger', 'Registro fallido')
+          }
         }else{
           this.makeToast(
             `En caso de persistir el error, comunicarse con un administrador`,
