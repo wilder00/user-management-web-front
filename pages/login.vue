@@ -14,7 +14,13 @@
       <input id="password" v-model="credentialForm.password" type="password"  class="form-control" placeholder="Contraseña" required="true">
       <div class="mt-5"></div>
       
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+      <button class="btn btn-lg btn-primary btn-block position-relative" type="submit">
+        
+        <span v-if="isLoginLoading" class="spinner position-absolute" >
+          <b-spinner class="" small variant="" label="Small Spinner"></b-spinner>
+        </span>
+        <span :class="{'invisible': isLoginLoading}">Iniciar Sesión</span>
+      </button>
       <p class="mt-5 mb-3 text-muted">¿Sin cuenta? <NuxtLink to="/register">Regístrate</NuxtLink> </p>
     </form>
   
@@ -105,6 +111,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .spinner {
+    left:50%; 
+    top: 50%; 
+    object-position: center;
+    transform: translate(-50%,-50%)
+  }
 
 }
 </style>

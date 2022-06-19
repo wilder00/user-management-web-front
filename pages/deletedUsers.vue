@@ -14,7 +14,7 @@
     </b-card>
   </div>
 
-  <div class="">
+  <div class="table-container">
     <DeletedUsersTable />
   </div>
 
@@ -61,3 +61,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.table-container{
+  overflow: auto;
+}
+</style>
+

@@ -22,7 +22,12 @@
       
       
       <div class="mt-5"></div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
+      <button class="btn btn-lg btn-primary btn-block position-relative" type="submit">
+        <span v-if="isLoading" class="spinner position-absolute" >
+          <b-spinner class="" small variant="" label="Small Spinner"></b-spinner>
+        </span>
+        <span :class="{'invisible': isLoading}">Registrarse</span>
+      </button>
       <p class="mt-5 mb-3 text-muted">¿Ya tienes cuenta? <NuxtLink to="/login">Iniciar sesión</NuxtLink> </p>
     </form>
   
@@ -36,6 +41,7 @@ export default {
   layout: "guests",
   data () {
     return {
+      isLoading: false,
       registerForm:{
         name:'',
         lastName:'',
@@ -48,10 +54,12 @@ export default {
 
   methods: {
     async onRegisterUser(){
-
+      if(this.isLoading === true) return;
+      this.isLoading = true
       try {
         const resp = await this.$axios.post('/auth/register', this.registerForm)
         if(resp.statusText === 'OK'){
+          this.resetForm();
           const user = resp.data
           this.makeToast(
             `${user.name}, debes esperar a que un administrador acepte tu registro.`,
@@ -83,7 +91,16 @@ export default {
             'Registro fallido'
           )
         }
+      }finally{
+        this.isLoading = false;
       }
+    },
+
+    resetForm(){
+      this.registerForm.name = ''
+      this.registerForm.lastName = ''
+      this.registerForm.email = ''
+      this.registerForm.password = ''
     },
 
     makeToast(message, variant, title = "", solid = false) {
@@ -109,5 +126,11 @@ export default {
   justify-content: center;
   align-items: center;
 
+  .spinner {
+    left:50%; 
+    top: 50%; 
+    object-position: center;
+    transform: translate(-50%,-50%)
+  }
 }
 </style>

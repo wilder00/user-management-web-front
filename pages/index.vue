@@ -24,7 +24,7 @@
     </b-card>
   </div>
 
-  <div class="">
+  <div class="table-container">
     <UserTable />
   </div>
 
@@ -71,3 +71,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.table-container{
+  overflow: auto;
+}
+</style>
