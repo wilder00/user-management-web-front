@@ -68,8 +68,6 @@ export default {
         }
         if(err.response){
           message = err.response.data.message;
-          console.log(message);
-          console.log(typeof(message) === 'string' ? message : message[0]);
           const text = typeof(message) === 'string' ? message : message[0]
           message = text;
         }

@@ -58,7 +58,7 @@ export default {
       this.isLoading = true
       try {
         const resp = await this.$axios.post('/auth/register', this.registerForm)
-        if(resp.statusText === 'OK'){
+        if(resp.status === 201){ // statusText es 'Created' y no 'OK'
           this.resetForm();
           const user = resp.data
           this.makeToast(
