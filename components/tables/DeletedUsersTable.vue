@@ -26,7 +26,7 @@
             como
             <span class="text-warning">{{ rolLabels[user.asRole] }}</span>
               el 
-            <span>{{ (new Date()).toLocaleDateString() }}</span>.
+            <span>{{ (new Date(user.date)).toLocaleDateString() }}</span>.
             
           </td>
           <td>
